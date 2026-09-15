@@ -1,0 +1,15 @@
+node_modules/
+web/dist/
+*.log
+.DS_Store
+.claude/
+
+# Local configuration, credentials, evidence, and release output
+.env
+.env.*
+!.env.example
+.lookgit/
+.local/
+release/
+*.pem
+*.key

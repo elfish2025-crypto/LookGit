@@ -1,0 +1,135 @@
+<svg width="100%" viewBox="0 0 680 936" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>分支生命周期：节点、连线与历史改写词表（定稿）</title>
+  <desc>节点类型、连线/关系类型、历史改写/主干回退三组图例，含多提交合并成一个（squash）漏斗，每项标注 git 可观察性。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <text x="40" y="26" style="font-size:15px;font-weight:500;fill:#1a1a18">分支生命周期词表 · 节点 + 连线（前进 / 回退）</text>
+  <text x="40" y="46" style="font-size:12px;fill:#5f5e5a">节点填充色 = 区分分支（无固定语义）；形状与连线才是语义。</text>
+  <text x="40" y="62" style="font-size:12px;fill:#5f5e5a">观察性：绿 = git 自动可得 · 橙 = 只能内容推断·不确定 · 灰 = 需 reflog 或意图层(§6)。</text>
+
+  <text x="40" y="92" style="font-size:13px;font-weight:500;fill:#1a1a18">节点类型</text>
+  <circle cx="56" cy="112" r="6" fill="#888780"/>
+  <text x="92" y="110" style="font-size:13px;fill:#1a1a18">普通提交</text>
+  <text x="92" y="125" style="font-size:12px;fill:#5f5e5a">一次正常提交 — git 自动</text>
+
+  <circle cx="56" cy="146" r="6" fill="#ffffff" stroke="#888780" stroke-width="2.5"/>
+  <text x="92" y="144" style="font-size:13px;fill:#1a1a18">合并提交</text>
+  <text x="92" y="159" style="font-size:12px;fill:#5f5e5a">一个节点两个父（merge），内容不塌缩 → 空心环 — git 自动</text>
+
+  <circle cx="56" cy="180" r="6" fill="#888780"/>
+  <circle cx="56" cy="180" r="10" fill="none" stroke="#888780" stroke-width="1.5"/>
+  <text x="92" y="178" style="font-size:13px;fill:#1a1a18">当前 HEAD</text>
+  <text x="92" y="193" style="font-size:12px;fill:#5f5e5a">正 checkout 在此 → 大同心圆 — git 自动</text>
+
+  <rect x="41" y="194" width="30" height="13" rx="3" fill="#faeeda"/>
+  <text x="56" y="204" text-anchor="middle" style="font-size:9px;fill:#854f0b">v1.0</text>
+  <circle cx="56" cy="218" r="6" fill="#888780"/>
+  <text x="92" y="215" style="font-size:13px;fill:#1a1a18">版本（tag）</text>
+  <text x="92" y="230" style="font-size:12px;fill:#5f5e5a">主干上被打 tag 的提交 → 徽章 — git 自动</text>
+
+  <circle cx="56" cy="252" r="6" fill="none" stroke="#888780" stroke-width="1.5" stroke-dasharray="2 2"/>
+  <text x="92" y="250" style="font-size:13px;fill:#1a1a18">未提交 / WIP</text>
+  <text x="92" y="265" style="font-size:12px;fill:#5f5e5a">工作区有改动，还没成 commit → 虚线幽灵 — git 自动</text>
+
+  <circle cx="56" cy="286" r="6" fill="none" stroke="#888780" stroke-width="1.5" stroke-dasharray="2 2"/>
+  <circle cx="56" cy="286" r="10" fill="none" stroke="#888780" stroke-width="1.5"/>
+  <text x="92" y="284" style="font-size:13px;fill:#1a1a18">游离 HEAD</text>
+  <text x="92" y="299" style="font-size:12px;fill:#5f5e5a">detached，不在任何分支 → 浮空虚线 — git 自动</text>
+
+  <circle cx="56" cy="320" r="6" fill="#BA7517"/>
+  <text x="92" y="318" style="font-size:13px;fill:#1a1a18">revert 提交</text>
+  <text x="92" y="333" style="font-size:12px;fill:#5f5e5a">反做某个提交（message 可认）— git 自动</text>
+
+  <circle cx="56" cy="354" r="6" fill="#E24B4A"/>
+  <text x="92" y="352" style="font-size:13px;fill:#1a1a18">坏提交</text>
+  <text x="92" y="367" style="font-size:12px;fill:#5f5e5a">被 revert 的那个提交 — git 自动·需 body</text>
+
+  <circle cx="56" cy="388" r="6" fill="none" stroke="#888780" stroke-width="1.5" stroke-dasharray="2 2" opacity="0.5"/>
+  <line x1="49" y1="395" x2="63" y2="381" stroke="#888780" stroke-width="1" opacity="0.5"/>
+  <text x="92" y="386" style="font-size:13px;fill:#1a1a18">废弃 / 丢弃</text>
+  <text x="92" y="401" style="font-size:12px;fill:#5f5e5a">被 amend/rebase/squash/reset 甩掉的旧提交 — 需 reflog / 意图层</text>
+
+  <text x="40" y="436" style="font-size:13px;font-weight:500;fill:#1a1a18">连线 · 前进（只新增历史 · 安全 · git 自动）</text>
+
+  <line x1="44" y1="450" x2="150" y2="450" stroke="#888780" stroke-width="1.5"/>
+  <circle cx="70" cy="450" r="4" fill="#888780"/>
+  <path d="M70 450 C70 462 110 462 110 474" fill="none" stroke="#378ADD" stroke-width="1.5"/>
+  <circle cx="110" cy="474" r="4" fill="#378ADD"/>
+  <text x="170" y="458" style="font-size:13px;fill:#1a1a18">开分支（fork）</text>
+  <text x="170" y="473" style="font-size:12px;fill:#5f5e5a">从主干某 commit 岔出 — git 自动</text>
+
+  <line x1="52" y1="500" x2="148" y2="500" stroke="#378ADD" stroke-width="2"/>
+  <circle cx="64" cy="500" r="4" fill="#378ADD"/>
+  <circle cx="100" cy="500" r="4" fill="#378ADD"/>
+  <circle cx="136" cy="500" r="4" fill="#378ADD"/>
+  <text x="170" y="504" style="font-size:13px;fill:#1a1a18">分支推进</text>
+  <text x="170" y="519" style="font-size:12px;fill:#5f5e5a">分支自己的提交序列 — git 自动</text>
+
+  <line x1="44" y1="538" x2="150" y2="538" stroke="#888780" stroke-width="1.5"/>
+  <circle cx="120" cy="538" r="5" fill="#ffffff" stroke="#888780" stroke-width="2.5"/>
+  <circle cx="60" cy="562" r="4" fill="#378ADD"/>
+  <path d="M60 562 C60 550 120 550 120 538" fill="none" stroke="#378ADD" stroke-width="1.5"/>
+  <text x="170" y="546" style="font-size:13px;fill:#1a1a18">合并 · merge commit</text>
+  <text x="170" y="561" style="font-size:12px;fill:#5f5e5a">留下 merge 节点，ancestry 完整 — git·判得准</text>
+
+  <line x1="44" y1="592" x2="150" y2="592" stroke="#888780" stroke-width="1.5"/>
+  <circle cx="60" cy="592" r="4" fill="#888780"/>
+  <circle cx="84" cy="592" r="4" fill="#888780"/>
+  <circle cx="112" cy="592" r="4" fill="#378ADD"/>
+  <circle cx="136" cy="592" r="4" fill="#378ADD"/>
+  <text x="170" y="588" style="font-size:13px;fill:#1a1a18">合并 · fast-forward</text>
+  <text x="170" y="603" style="font-size:12px;fill:#5f5e5a">指针前移，无 merge 节点 — 难判·推断</text>
+
+  <circle cx="50" cy="628" r="4" fill="#378ADD"/>
+  <circle cx="50" cy="638" r="4" fill="#378ADD"/>
+  <circle cx="50" cy="648" r="4" fill="#378ADD"/>
+  <path d="M55 628 L104 638" fill="none" stroke="#378ADD" stroke-width="1.5"/>
+  <path d="M55 638 L104 638" fill="none" stroke="#378ADD" stroke-width="1.5"/>
+  <path d="M55 648 L104 638" fill="none" stroke="#378ADD" stroke-width="1.5"/>
+  <line x1="106" y1="638" x2="116" y2="638" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <circle cx="128" cy="638" r="5" fill="#888780"/>
+  <text x="170" y="638" style="font-size:13px;fill:#1a1a18">合并 · squash（多个提交 → 主干一个提交）</text>
+  <text x="170" y="653" style="font-size:12px;fill:#5f5e5a">压成新 hash，ancestry 断裂 → 误判"未合入" — 内容推断·不确定</text>
+
+  <line x1="52" y1="686" x2="148" y2="686" stroke="#888780" stroke-width="1.5"/>
+  <circle cx="70" cy="686" r="4" fill="#E24B4A"/>
+  <circle cx="120" cy="686" r="4" fill="#BA7517"/>
+  <path d="M116 678 C100 668 86 668 74 678" fill="none" stroke="#BA7517" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#arrow)"/>
+  <text x="170" y="682" style="font-size:13px;fill:#1a1a18">revert（前进式撤销 / 退版本）</text>
+  <text x="170" y="697" style="font-size:12px;fill:#5f5e5a">追加反做 commit 撤销某提交；R → C 链接（含 main 退版本）— git·需 body</text>
+
+  <text x="40" y="732" style="font-size:13px;font-weight:500;fill:#1a1a18">连线 · 回退（抹除或改写已有历史 · 破坏性 · 多需 reflog）</text>
+
+  <circle cx="50" cy="766" r="4" fill="#888780" opacity="0.45"/>
+  <circle cx="68" cy="766" r="4" fill="#888780" opacity="0.45"/>
+  <circle cx="86" cy="766" r="4" fill="#888780" opacity="0.45"/>
+  <line x1="46" y1="771" x2="90" y2="761" stroke="#888780" stroke-width="1" opacity="0.45"/>
+  <line x1="96" y1="766" x2="110" y2="766" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <circle cx="122" cy="766" r="5" fill="#378ADD"/>
+  <text x="170" y="760" style="font-size:13px;fill:#1a1a18">squash 压缩（分支内 N→1）</text>
+  <text x="170" y="775" style="font-size:12px;fill:#5f5e5a">把自己分支的多个提交压成更少，原提交废弃（改写自己历史）— 原提交需 reflog</text>
+
+  <circle cx="52" cy="826" r="4" fill="#888780" opacity="0.4"/>
+  <circle cx="72" cy="826" r="4" fill="#888780" opacity="0.4"/>
+  <line x1="48" y1="831" x2="76" y2="821" stroke="#888780" stroke-width="1" opacity="0.4"/>
+  <line x1="84" y1="826" x2="98" y2="826" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <circle cx="110" cy="826" r="4" fill="#378ADD"/>
+  <circle cx="130" cy="826" r="4" fill="#378ADD"/>
+  <text x="170" y="822" style="font-size:13px;fill:#1a1a18">rebase 改写</text>
+  <text x="170" y="837" style="font-size:12px;fill:#5f5e5a">把分支提交重放到新基底，原提交废弃（新 hash）— 需 reflog</text>
+
+  <line x1="44" y1="880" x2="92" y2="880" stroke="#888780" stroke-width="1.5"/>
+  <line x1="92" y1="880" x2="150" y2="880" stroke="#888780" stroke-width="1.5" opacity="0.4"/>
+  <circle cx="56" cy="880" r="4" fill="#888780"/>
+  <circle cx="80" cy="880" r="4" fill="#888780"/>
+  <circle cx="104" cy="880" r="4" fill="#888780" opacity="0.4"/>
+  <circle cx="128" cy="880" r="4" fill="#888780" opacity="0.4"/>
+  <line x1="100" y1="884" x2="132" y2="876" stroke="#888780" stroke-width="1" opacity="0.4"/>
+  <path d="M128 870 C112 860 96 860 82 870" fill="none" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="170" y="876" style="font-size:13px;fill:#1a1a18">main reset（破坏式退版本 · 指针后移）</text>
+  <text x="170" y="891" style="font-size:12px;fill:#5f5e5a">main 指针退回旧 commit，后续提交丢弃（破坏性、需 force-push）— 需 reflog</text>
+</svg>

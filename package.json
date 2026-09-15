@@ -1,0 +1,54 @@
+{
+  "name": "lookgit",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Local Git Observer \u2014 a read-only console that makes local git state understandable.",
+  "scripts": {
+    "dev": "concurrently -k -n server,web -c blue,magenta \"npm:dev:server\" \"npm:dev:web\"",
+    "dev:server": "tsx watch server/index.ts",
+    "dev:web": "vite --config web/vite.config.ts",
+    "build": "vite build --config web/vite.config.ts",
+    "start": "tsx server/index.ts",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p web/tsconfig.json",
+    "check": "npm run typecheck && npm test && npm run build",
+    "package:release": "npm run build && node scripts/package-release.mjs"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "hono": "^4.6.14",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5"
+  },
+  "license": "MIT",
+  "author": "elfish2025-crypto",
+  "homepage": "https://github.com/elfish2025-crypto/LookGit#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elfish2025-crypto/LookGit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/elfish2025-crypto/LookGit/issues"
+  },
+  "engines": {
+    "node": ">=22.11.0"
+  },
+  "keywords": [
+    "git",
+    "dashboard",
+    "worktree",
+    "local-first",
+    "read-only"
+  ]
+}
