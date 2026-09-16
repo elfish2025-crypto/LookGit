@@ -8,6 +8,15 @@
 set -e
 cd "$(dirname "$0")"
 
+# This script belongs beside package.json, not as a standalone copied launcher.
+if [ ! -f package.json ] || [ ! -f package-lock.json ] || [ ! -f server/index.ts ]; then
+  echo "没有找到完整的 LookGit 项目：$(pwd)"
+  echo "请在项目文件夹中运行 start-lookgit.command。"
+  echo "如需桌面入口，请创建该文件的替身，不要单独复制脚本。"
+  if [ -t 0 ]; then read -r -p "按回车关闭…"; fi
+  exit 1
+fi
+
 PORT="${PORT:-5179}"
 URL="http://localhost:$PORT"
 export PORT

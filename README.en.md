@@ -33,7 +33,7 @@ npm start
 
 Open <http://localhost:5179>. Click **加文件夹** (Add folder) and enter an absolute repository path or a parent directory. New installations start with no watched folders. Press `Ctrl+C` to stop.
 
-On macOS, `start-lookgit.command` installs dependencies on first use, builds and opens the app. The `LookGit-v1.0.0.tar.gz` release asset includes the built UI; after extracting it, use `npm ci` and `npm start`. GitHub's automatic source archives require a build. Both require Node.js and Git.
+On macOS, `start-lookgit.command` installs dependencies on first use, builds and opens the app. For a desktop shortcut, make a Finder alias and move the alias to the desktop; do not copy the script alone, as it requires the project files beside it. The `LookGit-v1.0.1.tar.gz` release asset includes the built UI; after extracting it, use `npm ci` and `npm start`. GitHub's automatic source archives require a build. Both require Node.js and Git.
 
 Use `PORT` to choose another local port and `LOOKGIT_DATA_DIR` to isolate configuration (default: `~/.lookgit/config.json`). The server binds only to `127.0.0.1` and validates Host/Origin. It has no authentication and must not be publicly exposed or forwarded. See [SECURITY.md](SECURITY.md).
 
@@ -41,7 +41,7 @@ Use `PORT` to choose another local port and `LOOKGIT_DATA_DIR` to isolate config
 
 Remote tracking refs are local snapshots: LookGit never runs `fetch`. Merge ancestry and content-based squash/rebase inference are labeled separately. The graph shows a recent window, uses compressed spacing and organizes branches by first-parent chains; it does not assert where a commit was originally created. Reverted commits are not automatically defective commits.
 
-No cloud upload, telemetry or AI service is included. Dependency installation needs a network connection; observation runs locally. MCP, agent notes and deleted-branch archives are roadmap items, not v1.0.0 features.
+No cloud upload, telemetry or AI service is included. Dependency installation needs a network connection; observation runs locally. MCP, agent notes and deleted-branch archives are roadmap items, not v1.0.1 features.
 
 ## Development
 

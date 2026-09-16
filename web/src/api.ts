@@ -5,8 +5,8 @@ export interface ReposResponse {
   repos: RepoSummary[]
 }
 
-export async function fetchRepoDetail(id: string): Promise<RepoDetail> {
-  const res = await fetch(`/api/repos/${id}`)
+export async function fetchRepoDetail(id: string, signal?: AbortSignal): Promise<RepoDetail> {
+  const res = await fetch(`/api/repos/${id}`, { signal })
   if (!res.ok) throw new Error(`GET /api/repos/${id} → ${res.status}`)
   return res.json()
 }

@@ -2,7 +2,7 @@
 
 **看懂本地 Git 开发状态。** 一个运行在本机的只读仪表盘，适合同时管理多个项目、使用 worktree，或观察 AI coding agent 的开发进展。
 
-[English](README.en.md) · [下载 v1.0.0](https://github.com/elfish2025-crypto/LookGit/releases/tag/v1.0.0) · [MIT License](LICENSE)
+[English](README.en.md) · [下载 v1.0.1](https://github.com/elfish2025-crypto/LookGit/releases/tag/v1.0.1) · [MIT License](LICENSE)
 
 ![LookGit 的竖向提交时间线，展示主干、分支、版本标签与工作区状态](docs/images/timeline.jpg)
 
@@ -33,11 +33,11 @@ npm start
 
 打开 <http://localhost:5179>，点击「加文件夹」，输入仓库目录或包含多个仓库的父目录的绝对路径。首次启动为空，不自动扫描文件夹。按 `Ctrl+C` 停止服务。
 
-macOS 也可双击项目中的 `start-lookgit.command`：首次安装依赖、构建并打开浏览器。
+macOS 也可双击项目中的 `start-lookgit.command`：首次安装依赖、构建并打开浏览器。需要桌面入口时，请在 Finder 中为该文件「制作替身」，再将替身移到桌面；不要只复制脚本，启动时需要同目录中的完整项目文件。
 
 ### 下载发行包
 
-在 [Releases](https://github.com/elfish2025-crypto/LookGit/releases) 下载 `LookGit-v1.0.0.tar.gz`，解压后运行 `npm ci`、`npm start`。发行包包含已构建的前端，仍需要 Node.js 和 Git。GitHub 自动生成的 Source code 包需要另外运行 `npm run build`。
+在 [Releases](https://github.com/elfish2025-crypto/LookGit/releases) 下载 `LookGit-v1.0.1.tar.gz`，解压后运行 `npm ci`、`npm start`。发行包包含已构建的前端，仍需要 Node.js 和 Git。GitHub 自动生成的 Source code 包需要另外运行 `npm run build`。
 
 `SHA256SUMS.txt` 用于校验发行包内容；它是完整性校验，不是代码签名。
 
@@ -62,7 +62,7 @@ PORT=5189 npm start
 - 分支路线按第一父链组织；Git 不记录每次提交最初在哪个分支创建，共享历史只画一次。
 - 被撤销不等于代码一定有缺陷；只有扫描到关联 revert 的记录才会被标记。
 - 不包含 AI 模型、云端上传或遥测。安装依赖时 npm 需要联网；运行时的 Git 观察在本地完成。
-- MCP、Agent 笔记、已删除分支历史存档属于后续规划，未包含在 v1.0.0 中。
+- MCP、Agent 笔记、已删除分支历史存档属于后续规划，未包含在 v1.0.1 中。
 
 ## 开发
 

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { BranchInfo, RepoDetail } from '../../shared/types'
 import { fetchRepoDetail } from './api'
 import { BranchMap } from './BranchMap'
@@ -175,22 +175,44 @@ export function RepoDetailView({ id, onBack }: { id: string; onBack: () => void 
   const [selectedKey, setSelectedKey] = useState<string | null>(null)
   const [layout, setLayout] = useState<'vertical' | 'horizontal'>('vertical')
 
+  const [refreshing, setRefreshing] = useState(true)
+  const request = useRef<AbortController | null>(null)
+
+  const reload = useCallback(async () => {
+    request.current?.abort()
+    const controller = new AbortController()
+    request.current = controller
+    setRefreshing(true)
+    setError(null)
+    try {
+      const next = await fetchRepoDetail(id, controller.signal)
+      if (!controller.signal.aborted) setDetail(next)
+    } catch (e) {
+      if (!controller.signal.aborted) setError(e instanceof Error ? e.message : String(e))
+    } finally {
+      if (!controller.signal.aborted) setRefreshing(false)
+    }
+  }, [id])
+
   useEffect(() => {
     setDetail(null)
-    setError(null)
     setSelectedKey(null)
-    fetchRepoDetail(id)
-      .then(setDetail)
-      .catch((e) => setError(e instanceof Error ? e.message : String(e)))
-  }, [id])
+    void reload()
+    return () => request.current?.abort()
+  }, [reload])
 
   const shown = useMemo(() => {
     if (!detail) return []
     return mode === 'all' ? detail.branches : detail.branches.filter((b) => b.isActive)
   }, [detail, mode])
 
-  if (error) return <div className="empty">出错了：{error}</div>
-  if (!detail) return <div className="loading">读取中…</div>
+  if (!detail) return (
+    <div className="repo-detail">
+      <button className="back" type="button" onClick={onBack}>‹ 全部仓库</button>
+      {error ? <div className="detail-refresh-error" role="alert">读取失败：{error}</div> : <div className="loading" role="status">读取中…</div>}
+      {error && <button className="btn" type="button" onClick={() => void reload()} disabled={refreshing}>重试</button>}
+    </div>
+  )
 
   const activeCount = detail.branches.filter((b) => b.isActive).length
 
@@ -205,7 +227,17 @@ export function RepoDetailView({ id, onBack }: { id: string; onBack: () => void 
           <h1>{detail.name}</h1>
           <span className="path">{detail.path}</span>
         </div>
+        <div className="actions">
+          <button className="btn" type="button" onClick={() => void reload()} disabled={refreshing} title="重新扫描当前仓库的本地 Git 状态">
+            {refreshing ? '刷新中…' : '刷新'}
+          </button>
+        </div>
       </div>
+      <div className="subbar detail-refresh-status" role="status" aria-live="polite">
+        {refreshing ? '正在重新扫描当前仓库…' : '上次更新：'}
+        {!refreshing && <time dateTime={detail.scannedAt}>{new Date(detail.scannedAt).toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })}</time>}
+      </div>
+      {error && <div className="detail-refresh-error" role="alert">刷新失败：{error}。已保留上次数据，请重试。</div>}
 
       <div className="bar" style={{ borderLeftColor: BAR_COLOR[detail.status] }}>
         {detail.headline}

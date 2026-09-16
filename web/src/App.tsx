@@ -69,7 +69,7 @@ export function App() {
           </button>
         </div>
       </div>
-      <div className="subbar">LookGit v1.0.0 · {scannedRel ? `${scannedRel} 扫描` : ''}</div>
+      <div className="subbar">LookGit v1.0.1 · {scannedRel ? `${scannedRel} 扫描` : ''}</div>
 
       {showRoots && <RootsPanel onChange={load} />}
 

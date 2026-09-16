@@ -749,3 +749,9 @@ details[open] > summary .when-open { display: inline; }
 /* Keep node symbols round while branch spacing compresses on narrow screens. */
 .commit-graph { position: relative; }
 .commit-graph > .commit-node { position: absolute; top: 16px; width: 24px; height: 24px; transform: translateX(-50%); overflow: visible; }
+
+/* Refresh only the detail data; keep the mounted timeline and its open rows. */
+.repo-detail .topbar { flex-wrap: wrap; gap: 12px; }
+.repo-detail .topbar .actions { margin-left: auto; flex-shrink: 0; }
+.detail-refresh-status { min-height: 18px; }
+.detail-refresh-error { padding: 10px 12px; margin: 12px 0; border: 1px solid var(--error); border-radius: var(--radius); color: var(--error); background: var(--error-bg); font-size: 13px; overflow-wrap: anywhere; }
